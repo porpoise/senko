@@ -1,0 +1,13 @@
+{
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 4,
+  "import/extensions": [
+    "error",
+    "never",
+    {
+      "d.ts": "never"
+    }
+  ],
+  "endOfLine": "auto"
+}

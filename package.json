@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/raghav-misra/senko/issues"
   },
-  "homepage": "https://github.com/raghav-misra/senko#readme"
+  "homepage": "https://github.com/raghav-misra/senko#readme",
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-typescript-prettier": "^4.2.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  }
 }

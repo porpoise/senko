@@ -1,0 +1,16 @@
+{
+    "extends": "airbnb-typescript-prettier",
+    "rules": {
+        "import/extensions": "off",
+        "no-console": "off",
+        "no-await-in-loop": "off",
+        "no-restricted-syntax": "off"
+    },
+    "settings": {
+        "import/extensions": [
+            ".ts",
+            ".js",
+            ".d.ts"
+        ]
+    }
+}
