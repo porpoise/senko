@@ -1,0 +1,22 @@
+{
+  "name": "senko",
+  "version": "1.0.0",
+  "description": "Easy global state with React",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raghav-misra/senko.git"
+  },
+  "keywords": [
+    "senko"
+  ],
+  "author": "Raghav Misra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raghav-misra/senko/issues"
+  },
+  "homepage": "https://github.com/raghav-misra/senko#readme"
+}
