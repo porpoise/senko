@@ -17,6 +17,7 @@ export default [
             file: "dist/index.esm.js",
             format: "esm",
             sourcemap: true,
+            external: ["react"]
         },
         plugins: [typescriptPlugin],
     },
@@ -26,6 +27,7 @@ export default [
             file: "dist/index.cjs",
             format: "cjs",
             sourcemap: true,
+            external: ["react"]
         },
         plugins: [typescriptPlugin],
     },
