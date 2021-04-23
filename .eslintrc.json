@@ -6,11 +6,8 @@
         "no-await-in-loop": "off",
         "no-restricted-syntax": "off"
     },
-    "settings": {
-        "import/extensions": [
-            ".ts",
-            ".js",
-            ".d.ts"
-        ]
-    }
+    "ignorePatterns": [
+        "rollup.config.js",
+        "dist/*"
+    ]
 }
