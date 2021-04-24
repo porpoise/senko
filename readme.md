@@ -1,9 +1,19 @@
+![senko is cool and amazing for react users](/senko.png)
+
 # senko
 
-making react good since 2021
+a global state for react but its actually easy and not overcomplicated to hell and back
+
+## install
+
+`npm i senko`
+
+## flex on the overcomplicated haters
 
 ```ts
 import React from "react";
+import ReactDOM from "react-dom";
+
 import senko from "senko";
 
 // build a hook that allows component-level access to the state
