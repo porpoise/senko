@@ -32,14 +32,14 @@ export default [
         plugins: [typescriptPlugin],
     },
     {
-        input,
+        input: "src/senko.ts",
         output: {
             file: "dist/index.js",
             format: "iife",
             globals: {
                 "react": "React"
             },
-            name: "Senko"
+            name: "senko"
         },
         plugins: [typescriptPlugin, terserPlugin],
     },
