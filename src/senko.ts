@@ -1,10 +1,10 @@
 import { useState } from "react";
-import model, { IModel } from "./model";
+import model, { IModel, InputProp } from "./model";
 import createObservable from "./observable";
 
 export type Senko<Store> = Store & {
-    model: Record<keyof Store, <Value>() => ReturnType<typeof model>>
-}
+    model: Record<keyof Store, <Value>() => ReturnType<typeof model>>;
+};
 
 export type SenkoState<Value> = [Value, (val: Value) => void];
 
@@ -21,9 +21,7 @@ export default function senko<Store>(initial: Store) {
         observable.attach<Value>(prop, setValue);
 
         const setter = (newValue: Value) => {
-            observable.data[
-                prop
-            ] = (newValue as unknown) as Store[keyof Store];
+            observable.data[prop] = (newValue as unknown) as Store[keyof Store];
         };
 
         return [value, setter];
@@ -42,7 +40,8 @@ export default function senko<Store>(initial: Store) {
             });
 
             Object.defineProperty(stateObject.model, prop, {
-                get: () => model(stateObject, prop),
+                get: () => (inputProp: InputProp = "value") =>
+                    model(stateObject, prop, inputProp),
             });
         }
 

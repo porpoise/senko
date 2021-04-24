@@ -8,7 +8,7 @@ a global state for react but its actually easy and not overcomplicated to hell a
 
 `npm i senko`
 
-## flex on the overcomplicated haters
+## the counter but senko
 
 ```ts
 import React from "react";
@@ -43,6 +43,25 @@ ReactDOM.render(
 // fun fact, you can get a read-writable object of the state with useSenko.current()
 // probably dont use this for production though lol 
 console.log(useSenko.current());
+```
+
+## two-way binding cause it exists idk
+
+```ts
+const useSenko = senko({ text: "hello" });
+
+function TwoWayBinding() {
+    const state = useSenko();
+
+    return (
+        <>
+            <h1>You wrote {text}</h1>
+
+            <label>Change the text</label>
+            <input {...state.model.text()} />
+        </>
+    )
+}
 ```
 
 ## go czech it out ;)
