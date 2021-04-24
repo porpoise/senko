@@ -36,13 +36,13 @@ function Counter() {
 
 // render
 ReactDOM.render(
-    [h(Counter), h(Counter)], // render two counters to flex the globalness
+    [<Counter />, <Counter />], // render two counters to flex the globalness
     document.querySelector("main")
 );
 
 // fun fact, you can get a read-writable object of the state with useSenko.current()
 // probably dont use this for production though lol 
-console.log(useSenko.current())
+console.log(useSenko.current());
 ```
 
 ## go czech it out ;)
