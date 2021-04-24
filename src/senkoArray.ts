@@ -8,7 +8,7 @@ export default class SenkoArray < T > {
     }
     updateGetters() {
         //Remove old getters
-        Object.keys(this).filter(k => !isNaN(parseInt(k))).forEach(k => delete this[parseInt(k)]);
+        Object.keys(Object.getOwnPropertyDescriptors(this)).filter(k => !isNaN(parseInt(k))).forEach(k => Object.defineProperty(this, k, {get:undefined,set:undefined,configurable:true}))
         this.value.forEach((val, i) => {
             Object.defineProperty(this, i, {
                 get() {
