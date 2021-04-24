@@ -6,7 +6,7 @@ export type SenkoState<Value> = [Value, (val: Value) => void];
 export default function senko<StoreType>(initial: StoreType) {
     const observable = createObservable(initial);
 
-    const useSenko = <ValueType = StoreType[keyof StoreType]>(
+    const useSpecificState = <ValueType = StoreType[keyof StoreType]>(
         prop: keyof StoreType
     ): SenkoState<ValueType> => {
         const [value, setValue] = useState<ValueType>(
@@ -24,7 +24,20 @@ export default function senko<StoreType>(initial: StoreType) {
         return [value, setter];
     };
 
-    useSenko.current = () => observable.data;
+    const useSenko = () => {
+        const stateObject: StoreType = Object.create(null);
 
-    return useSenko;
+        for (const prop of Object.keys(initial) as (keyof StoreType)[]) {
+            const [val, setVal] = useSpecificState(prop);
+
+            Object.defineProperty(stateObject, prop, {
+                get: () => val,
+                set: setVal,
+            });
+        }
+
+        return stateObject;
+    };
+
+    return Object.assign(useSenko, { current: () => observable.data });
 }
