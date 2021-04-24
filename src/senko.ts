@@ -1,5 +1,6 @@
 import { useState } from "react";
 import createObservable from "./observable";
+import SenkoArray from "./senkoArray";
 
 export type SenkoState<Value> = [Value, (val: Value) => void];
 
@@ -29,9 +30,13 @@ export default function senko<StoreType>(initial: StoreType) {
 
         for (const prop of Object.keys(initial) as (keyof StoreType)[]) {
             const [val, setVal] = useSpecificState(prop);
+            let senkoValue = val as StoreType[keyof StoreType] | SenkoArray<StoreType[keyof StoreType]>
 
-            Object.defineProperty(stateObject, prop, {
-                get: () => val,
+            //For arrays provide Senko Array Helper
+            if(Array.isArray(val)) senkoValue = new SenkoArray(val,setVal as unknown as (val: StoreType[keyof StoreType][]) => void);
+            
+             Object.defineProperty(stateObject, prop, {
+                get: () => senkoValue,
                 set: setVal,
             });
         }
