@@ -12,16 +12,14 @@ const useSenko = senko({
 });
 
 function Counter() {
-    // identical to useState, 
-    // except the parameter is the prop name
-    // in our case, "count"
-    const [count, setCount] = useSenko("count");
+    // returns an observable that gives us a mutable state object
+    const state = useSenko();
 
     return (
         <>
-            <code>{count}</code>
-            <button onClick={() => setCount(count + 1)}>+</button>
-            <button onClick={() => setCount(count + 1)}>-</button>
+            <code>{state.count}</code>
+            <button onClick={() => state.count++}>+</button>
+            <button onClick={() => state.count--}>-</button>
         </>
     )
 }
