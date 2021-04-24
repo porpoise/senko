@@ -1,7 +1,16 @@
-// eslint-disable-next-line import/no-unresolved
-import { IObservable, ReactiveHandler } from "@types";
+export type ReactiveHandler<T> = (value: T) => void;
 
-export default function createObservable<T>(initial: T): IObservable<T> {
+export interface IObservable<T> {
+    data: T;
+    attach<ValueType = T[keyof T]>(
+        prop: keyof T,
+        handler: ReactiveHandler<ValueType>
+    ): void;
+}
+
+export default function createObservable<T>(
+    initial: T
+): Readonly<IObservable<T>> {
     // Internally stores the most updated data:
     const internal: T = { ...initial };
 
@@ -9,7 +18,10 @@ export default function createObservable<T>(initial: T): IObservable<T> {
     const observable: T = Object.create(null);
 
     // Store handlers to trigger when property values change:
-    const handlers: Record<keyof T, ReactiveHandler<T>[]> = Object.create(null);
+    const handlers: Record<
+        keyof T,
+        ReactiveHandler<T[keyof T]>[]
+    > = Object.create(null);
 
     // Populate "observable" with getters and setters:
     for (const key of Object.keys(internal) as (keyof T)[]) {
@@ -27,8 +39,14 @@ export default function createObservable<T>(initial: T): IObservable<T> {
         });
     }
 
-    return {
+    return Object.freeze({
         data: observable,
-        attach: (prop, handler) => handlers[prop].push(handler),
-    };
+        attach: <ValueType = T[keyof T]>(
+            prop: keyof T,
+            handler: ReactiveHandler<ValueType>
+        ) =>
+            handlers[prop].push(
+                (handler as unknown) as ReactiveHandler<T[keyof T]>
+            ),
+    });
 }

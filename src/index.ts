@@ -1,3 +1,6 @@
-import createObservable from "./observable";
+import senko from "./senko";
 
-export { createObservable };
+export * from "./observable";
+export * from "./senko";
+
+export default senko;
