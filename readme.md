@@ -1,4 +1,4 @@
-![senko is cool and amazing for react users](/senko.png)
+![senko is cool and amazing for react users](/img/senko.png)
 
 # senko
 
@@ -44,3 +44,7 @@ ReactDOM.render(
 // probably dont use this for production though lol 
 console.log(useSenko.current())
 ```
+
+## go czech it out ;)
+
+![go use senko now](/img/footer.png)
