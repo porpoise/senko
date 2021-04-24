@@ -1,4 +1,4 @@
-![senko is cool and amazing for react users](/img/senko.png)
+![senko is cool and amazing for react users](/img/header.png)
 
 # senko
 
