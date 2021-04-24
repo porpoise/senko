@@ -13,21 +13,21 @@ const terserPlugin = terser();
 export default [
     {
         input,
+        external: ["react"],
         output: {
             file: "dist/index.esm.js",
             format: "esm",
             sourcemap: true,
-            external: ["react"]
         },
         plugins: [typescriptPlugin],
     },
     {
         input,
+        external: ["react"],
         output: {
             file: "dist/index.cjs",
             format: "cjs",
             sourcemap: true,
-            external: ["react"]
         },
         plugins: [typescriptPlugin],
     },
@@ -35,9 +35,11 @@ export default [
         input,
         output: {
             file: "dist/index.js",
+            format: "iife",
             globals: {
                 "react": "React"
-            }
+            },
+            name: "Senko"
         },
         plugins: [typescriptPlugin, terserPlugin],
     },
