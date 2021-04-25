@@ -1,6 +1,6 @@
 {
   "name": "senko",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Easy global state with React",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
