@@ -57,5 +57,5 @@ export default function senko<Store>(initial: Store) {
         return stateObject;
     };
 
-    return Object.assign(useSenko, { current: () => observable.data });
+    return useSenko;
 }
