@@ -1,3 +1,5 @@
+type SenkoArray<T> = Array<T> & { iterable(): Array<T> };
+
 const NONMUTABLE_ARRAY_METHODS: (keyof Array<any>)[] = [
     "concat",
     "entries",
@@ -56,7 +58,7 @@ function updateGetters<T>(
     });
 }
 
-export default function useArray<T>(val: T[], setVal: (val: T[]) => void): Array<T> {
+export default function useArray<T>(val: T[], setVal: (val: T[]) => void): SenkoArray<T> {
     const copy = [...val];
 
     function update() {
@@ -67,6 +69,10 @@ export default function useArray<T>(val: T[], setVal: (val: T[]) => void): Array
     const returnValue = {
         get length() {
             return copy.length;
+        },
+
+        get iterable() {
+            return copy;
         },
 
         copyWithin(target: number, start: number, end?: number) {
@@ -131,5 +137,5 @@ export default function useArray<T>(val: T[], setVal: (val: T[]) => void): Array
 
     updateGetters(returnValue, copy, setVal);
 
-    return (returnValue as unknown) as Array<T>;
+    return (returnValue as unknown) as SenkoArray<T>;
 }
