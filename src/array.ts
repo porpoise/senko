@@ -1,4 +1,4 @@
-type SenkoArray<T> = Array<T> & { iterable(): Array<T> };
+type SenkoArray<T> = Array<T> & { readonly iterable: Array<T> };
 
 const NONMUTABLE_ARRAY_METHODS: (keyof Array<any>)[] = [
     "concat",
