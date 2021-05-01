@@ -1,11 +1,6 @@
 import { useState } from "react";
-import model, { InputProp } from "./model";
 import createObservable from "./observable";
 import useArray from "./array";
-
-export type Senko<Store> = Store & {
-    model: Record<keyof Store, <Value>() => ReturnType<typeof model>>;
-};
 
 export type SenkoState<Value> = [Value, (val: Value) => void];
 
@@ -28,9 +23,8 @@ export default function senko<Store>(initial: Store) {
         return [value, setter];
     };
 
-    const useSenko = (): Senko<Store> => {
-        const stateObject: Senko<Store> = Object.create(null);
-        stateObject.model = Object.create(null);
+    const useSenko = (): Store => {
+        const stateObject: Store = Object.create(null);
 
         for (const prop of Object.keys(initial) as (keyof Store)[]) {
             const [val, setVal] = useSpecificState(prop);
@@ -46,11 +40,6 @@ export default function senko<Store>(initial: Store) {
             Object.defineProperty(stateObject, prop, {
                 get: () => senkoValue,
                 set: setVal,
-            });
-
-            Object.defineProperty(stateObject.model, prop, {
-                get: () => (inputProp: InputProp = "value") =>
-                    model(stateObject, prop, inputProp),
             });
         }
 

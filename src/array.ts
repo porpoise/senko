@@ -20,7 +20,7 @@ const NONMUTABLE_ARRAY_METHODS: (keyof Array<any>)[] = [
     "some",
     "toLocaleString",
     "toString",
-    "values"
+    "values",
 ];
 
 function updateGetters<T>(
@@ -58,7 +58,10 @@ function updateGetters<T>(
     });
 }
 
-export default function useArray<T>(val: T[], setVal: (val: T[]) => void): SenkoArray<T> {
+export default function useArray<T>(
+    val: T[],
+    setVal: (val: T[]) => void
+): SenkoArray<T> {
     const copy = [...val];
 
     function update() {
@@ -131,9 +134,11 @@ export default function useArray<T>(val: T[], setVal: (val: T[]) => void): Senko
         },
     };
 
-    NONMUTABLE_ARRAY_METHODS.forEach(method => Object.defineProperty(returnValue, method, {
-        get: () => val[method]
-    }));
+    NONMUTABLE_ARRAY_METHODS.forEach((method) =>
+        Object.defineProperty(returnValue, method, {
+            get: () => val[method],
+        })
+    );
 
     updateGetters(returnValue, copy, setVal);
 

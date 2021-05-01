@@ -39,29 +39,6 @@ ReactDOM.render(
     [<Counter />, <Counter />], // render two counters to flex the globalness
     document.querySelector("main")
 );
-
-// fun fact, you can get a read-writable object of the state with useSenko.current()
-// probably dont use this for production though lol 
-console.log(useSenko.current());
-```
-
-## two-way binding cause it exists idk
-
-```ts
-const useSenko = senko({ text: "hello" });
-
-function TwoWayBinding() {
-    const state = useSenko();
-
-    return (
-        <>
-            <h1>You wrote {text}</h1>
-
-            <label>Change the text</label>
-            <input {...state.model.text()} />
-        </>
-    )
-}
 ```
 
 ## go czech it out ;)
