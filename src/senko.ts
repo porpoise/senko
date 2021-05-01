@@ -1,7 +1,7 @@
 import { useState } from "react";
 import model, { InputProp } from "./model";
 import createObservable from "./observable";
-import SenkoArray from "./array";
+import useArray from "./array";
 
 export type Senko<Store> = Store & {
     model: Record<keyof Store, <Value>() => ReturnType<typeof model>>;
@@ -38,7 +38,7 @@ export default function senko<Store>(initial: Store) {
 
             //For arrays provide Senko Array Helper
             if (Array.isArray(val))
-                senkoValue = new SenkoArray(
+                senkoValue = useArray(
                     val,
                     (setVal as unknown) as (val: Store[keyof Store][]) => void
                 );
