@@ -19,14 +19,16 @@ export class SenkoArray<T> {
                     configurable: true,
                 })
             );
+
+        // New getters:
         this.value.forEach((val, i) => {
             Object.defineProperty(this, i, {
                 get() {
                     return val;
                 },
                 set(val) {
-                    this.array[i] = val;
-                    this.setVal([...this.array]);
+                    this.value[i] = val;
+                    this.setValue([...this.value]);
                 },
                 configurable: true,
             });
