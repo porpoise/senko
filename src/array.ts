@@ -145,7 +145,7 @@ export class SenkoArray<T> {
         predicate: (value: T, index: number, array: T[]) => value is T,
         thisArg?: any
     ) {
-        return this.value.some(predicate);
+        return this.value.some(predicate, thisArg);
     }
 
     toLocaleString() {
@@ -178,8 +178,8 @@ export class SenkoArray<T> {
         return response;
     }
 
-    push(value: T) {
-        const response = this.value.push(value);
+    push(...items: T[]) {
+        const response = this.value.push(...items);
 
         this.update();
         return response;
@@ -187,35 +187,30 @@ export class SenkoArray<T> {
 
     reverse() {
         const response = this.value.reverse();
-
         this.update();
         return response;
     }
 
     shift() {
         const response = this.value.shift();
-
         this.update();
         return response;
     }
 
     sort(compareFn?: ((a: T, b: T) => number) | undefined) {
         const response = this.value.sort(compareFn);
-
         this.update();
         return response;
     }
 
     splice(start: number, deleteCount?: number | undefined) {
         const response = this.value.splice(start, deleteCount);
-
         this.update();
         return response;
     }
 
     unshift(...items: T[]) {
         const response = this.value.unshift(...items);
-
         this.update();
         return response;
     }
