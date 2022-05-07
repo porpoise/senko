@@ -30,12 +30,9 @@ export default function senko<Store>(initial: Store) {
             const [val, setVal] = useSpecificState(prop);
             let senkoValue = val as Store[keyof Store] | Store[keyof Store][];
 
-            //For arrays provide Senko Array Helper
-            if (Array.isArray(val))
-                senkoValue = useArray(
-                    val,
-                    (setVal as unknown) as (val: Store[keyof Store][]) => void
-                );
+            if (Array.isArray(val)) {
+                senkoValue = useArray(val, setVal) as Store[keyof Store][];
+            }
 
             Object.defineProperty(stateObject, prop, {
                 get: () => senkoValue,

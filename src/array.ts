@@ -1,146 +1,27 @@
-type SenkoArray<T> = Array<T> & { readonly iterable: Array<T> };
+const MUTATIONS = ["pop", "push", "reverse", "shift", "splice", "sort", "unshift"];
 
-const NONMUTABLE_ARRAY_METHODS: (keyof Array<any>)[] = [
-    "concat",
-    "entries",
-    "every",
-    "filter",
-    "find",
-    "findIndex",
-    "forEach",
-    "includes",
-    "indexOf",
-    "join",
-    "keys",
-    "lastIndexOf",
-    "map",
-    "reduce",
-    "reduceRight",
-    "slice",
-    "some",
-    "toLocaleString",
-    "toString",
-    "values",
-];
-
-function updateGetters<T>(
-    wrapperObject: Record<string | number, any>,
-    arr: T[],
-    setVal: (val: T[]) => void
-) {
-    // Remove old getters
-    Object.keys(Object.getOwnPropertyDescriptors(wrapperObject))
-        .filter((k) => !isNaN(parseInt(k)))
-        .forEach((k) =>
-            Object.defineProperty(wrapperObject, k, {
-                get: undefined,
-                set: undefined,
-                configurable: true,
-            })
-        );
-
-    // New getters:
-    arr.forEach((val, i) => {
-        Object.defineProperty(wrapperObject, i, {
-            get() {
-                // if (typeof val === "object") {
-                //     return senko(val)();
-                // }
-
-                return val;
-            },
-            set(val) {
-                arr[i] = val;
-                setVal([...arr]);
-            },
-            configurable: true,
-        });
-    });
+interface SenkoArray<T> extends Array<T> {
+    modify(index: number, value: T): void;
 }
 
-export default function useArray<T>(
-    val: T[],
-    setVal: (val: T[]) => void
-): SenkoArray<T> {
-    const copy = [...val];
-
-    function update() {
+export default function useArray<T>(val: T[], setVal: (n: any) => void): SenkoArray<T> {
+    let copy = [...val] as SenkoArray<T>;
+    
+    function mutate(funcName: string, args: any[]) {
+        const res = (Array.prototype[funcName as any] as any).call(copy, ...args);
         setVal(copy);
-        updateGetters(returnValue, copy, setVal);
+        return res;
+    }
+    
+    for (const type of MUTATIONS) {
+        copy[type as any] = 
+            ((...args: any[]) => mutate(type, args)) as any;
     }
 
-    const returnValue = {
-        get length() {
-            return copy.length;
-        },
-
-        get iterable() {
-            return copy;
-        },
-
-        copyWithin(target: number, start: number, end?: number) {
-            const response = copy.copyWithin(target, start, end);
-            update();
-            return response;
-        },
-
-        fill(value: T, start?: number | undefined, end?: number) {
-            const response = copy.fill(value, start, end);
-            update();
-            return response;
-        },
-
-        pop() {
-            const response = copy.pop();
-            update();
-            return response;
-        },
-
-        push(...items: T[]) {
-            const response = copy.push(...items);
-
-            update();
-            return response;
-        },
-
-        reverse() {
-            const response = copy.reverse();
-            update();
-            return response;
-        },
-
-        shift() {
-            const response = copy.shift();
-            update();
-            return response;
-        },
-
-        sort(compareFn?: ((a: T, b: T) => number) | undefined) {
-            const response = copy.sort(compareFn);
-            update();
-            return response;
-        },
-
-        splice(start: number, deleteCount?: number | undefined) {
-            const response = copy.splice(start, deleteCount);
-            update();
-            return response;
-        },
-
-        unshift(...items: T[]) {
-            const response = copy.unshift(...items);
-            update();
-            return response;
-        },
+    copy.modify = (index: number, value: T) => {
+        copy[index] = value;
+        setVal(copy);
     };
 
-    NONMUTABLE_ARRAY_METHODS.forEach((method) =>
-        Object.defineProperty(returnValue, method, {
-            get: () => val[method],
-        })
-    );
-
-    updateGetters(returnValue, copy, setVal);
-
-    return (returnValue as unknown) as SenkoArray<T>;
+    return copy;
 }
