@@ -1,7 +1,7 @@
 const MUTATIONS = ["pop", "push", "reverse", "shift", "splice", "sort", "unshift"];
 
-interface SenkoArray<T> extends Array<T> {
-    modify(index: number, value: T): void;
+export interface SenkoArray<T> extends Array<T> {
+    setAt(index: number, value: T): void;
 }
 
 export default function useArray<T>(val: T[], setVal: (n: any) => void): SenkoArray<T> {
@@ -18,7 +18,7 @@ export default function useArray<T>(val: T[], setVal: (n: any) => void): SenkoAr
             ((...args: any[]) => mutate(type, args)) as any;
     }
 
-    copy.modify = (index: number, value: T) => {
+    copy.setAt = (index: number, value: T) => {
         copy[index] = value;
         setVal(copy);
     };
